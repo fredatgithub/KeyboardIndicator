@@ -1,5 +1,9 @@
 Keyboard Indicator Change Log
 
+1.7.0
+- Upgrade to .NET 4.8
+- Add Freddy Juhel Copyright 2022
+
 1.6.2.0
 - Fix startup registry key
 

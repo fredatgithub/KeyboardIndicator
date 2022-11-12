@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Security.Permissions;
@@ -12,15 +11,15 @@ namespace SimpleOSD
         {
             InitializeComponent();
 
-            this.Clickhrough = true;
-            this.StartPosition = FormStartPosition.Manual;
-            this.CenterToScreen();
+            Clickhrough = true;
+            StartPosition = FormStartPosition.Manual;
+            CenterToScreen();
         }
 
         public OsdForm(bool i_Clickhrough)
             : this()
         {
-            this.Clickhrough = i_Clickhrough;
+            Clickhrough = i_Clickhrough;
         }
 
         protected override CreateParams CreateParams
@@ -34,7 +33,7 @@ namespace SimpleOSD
                 baseParams.ExStyle |= (int)WinApi.WS_EX_TOPMOST | (int)WinApi.WS_EX_NOACTIVATE |
                     (int)WinApi.WS_EX_TOOLWINDOW | (int)WinApi.WS_EX_LAYERED;
 
-                if (this.Clickhrough)
+                if (Clickhrough)
                 {
                     baseParams.ExStyle |= (int)WinApi.WS_EX_TRANSPARENT;
                 }
@@ -56,14 +55,14 @@ namespace SimpleOSD
 
         public Label Label
         {
-            get { return this.label; }
+            get { return label; }
         }
 
         public virtual void ShowAnimate()
         {
-            WinApi.SetWindowPos(this.Handle, (IntPtr)WinApi.HWND_TOPMOST, 0, 0, 0, 0, WinApi.SWP_NOSIZE | WinApi.SWP_NOACTIVATE | WinApi.SWP_NOMOVE);
+            WinApi.SetWindowPos(Handle, (IntPtr)WinApi.HWND_TOPMOST, 0, 0, 0, 0, WinApi.SWP_NOSIZE | WinApi.SWP_NOACTIVATE | WinApi.SWP_NOMOVE);
             //WinApi.AnimateWindow(base.Handle, 100, WinApi.AnimateWindowFlags.AW_CENTER);
-            this.Show();
+            Show();
         }
 
         public virtual void HideAnimate(int i_Time, WinApi.AnimateWindowFlags i_Animation)
@@ -86,7 +85,7 @@ namespace SimpleOSD
         {
             base.OnMouseDown(e);
 
-            if (e.Button == MouseButtons.Left && this.WindowState == FormWindowState.Normal)
+            if (e.Button == MouseButtons.Left && WindowState == FormWindowState.Normal)
             {
                 m_Moving = true;
                 m_Position = new Point(-e.X, -e.Y);
@@ -111,7 +110,7 @@ namespace SimpleOSD
             {
                 Point pos = Cursor.Position;
                 pos.Offset(m_Position);
-                this.Location = pos;
+                Location = pos;
             }
         }
 
@@ -119,17 +118,17 @@ namespace SimpleOSD
 
         private void label_MouseDown(object sender, MouseEventArgs e)
         {
-            this.OnMouseDown(e);
+            OnMouseDown(e);
         }
 
         private void label_MouseMove(object sender, MouseEventArgs e)
         {
-            this.OnMouseMove(e);
+            OnMouseMove(e);
         }
 
         private void label_MouseUp(object sender, MouseEventArgs e)
         {
-            this.OnMouseUp(e);
+            OnMouseUp(e);
         }
     }
 }

@@ -70,8 +70,8 @@ namespace KeyboardIndicator
         {
             InitializeComponent();
             
-            this.fillAnimationCb();
-            this.fillStyleCb();
+            fillAnimationCb();
+            fillStyleCb();
             lblAbout.Text = r_AboutString;
         }
 
@@ -126,22 +126,22 @@ namespace KeyboardIndicator
         {
             base.OnLoad(e);
 
-            this.hideMyself();
-            this.loadSettings();
-            this.m_KBH.KeyDownIntercepted += new KeyboardHook.KeyboardHookEventHandler(KBH_KeyDownIntercepted);
-            this.m_KBH.KeyUpIntercepted += new KeyboardHook.KeyboardHookEventHandler(KBH_KeyUpIntercepted);
+            hideMyself();
+            loadSettings();
+            m_KBH.KeyDownIntercepted += new KeyboardHook.KeyboardHookEventHandler(KBH_KeyDownIntercepted);
+            m_KBH.KeyUpIntercepted += new KeyboardHook.KeyboardHookEventHandler(KBH_KeyUpIntercepted);
         }
 
         private void updateModifiers()
         {
-            this.updateCapsLock(KeyboardState.CapsLock);
-            this.updateNumLock(KeyboardState.NumLock);
-            this.updateScrollLock(KeyboardState.Scroll);
+            updateCapsLock(KeyboardState.CapsLock);
+            updateNumLock(KeyboardState.NumLock);
+            updateScrollLock(KeyboardState.Scroll);
         }
 
         void KBH_KeyUpIntercepted(KeyboardHook.KeyboardHookEventArgs e)
         {
-            this.m_LastKey = Keys.None;
+            m_LastKey = Keys.None;
         }
 
         private void KBH_KeyDownIntercepted(KeyboardHook.KeyboardHookEventArgs e)
@@ -149,90 +149,90 @@ namespace KeyboardIndicator
             // note: key not intercepted yet by the os
             // e.g. caps lock press from off to on still gives False
 
-            if (e.Key != this.m_LastKey)
+            if (e.Key != m_LastKey)
             {
                 switch (e.Key)
                 {
                     case Keys.CapsLock:
-                        this.updateCapsLock(!KeyboardState.CapsLock);
-                        this.ShowOSD();
+                        updateCapsLock(!KeyboardState.CapsLock);
+                        ShowOSD();
                         break;
 
                     case Keys.NumLock:
-                        this.updateNumLock(!KeyboardState.NumLock);
-                        this.ShowOSD();
+                        updateNumLock(!KeyboardState.NumLock);
+                        ShowOSD();
                         break;
 
                     case Keys.Scroll:
-                        this.updateScrollLock(!KeyboardState.Scroll);
-                        this.ShowOSD();
+                        updateScrollLock(!KeyboardState.Scroll);
+                        ShowOSD();
                         break;
 
                     case Keys.Insert:
-                        this.updateInsert();
-                        this.ShowOSD();
+                        updateInsert();
+                        ShowOSD();
                         break;
                 }
 
-                this.m_LastKey = e.Key;
+                m_LastKey = e.Key;
             }
         }
 
         private void updateCapsLock(bool i_Toggle)
         {
             string text = i_Toggle ? tbCapsLockOn.Text : tbCapsLockOff.Text;
-            this.m_OsdString = text;
-            this.notifyIconCapsLock.Icon = i_Toggle ? this.m_IndicatorIcons[(int)eIconIndex.CapsLockOn]
-                                    : this.m_IndicatorIcons[(int)eIconIndex.CapsLockOff];
-            this.notifyIconCapsLock.Text = text;
-            this.notifyIconCapsLock.BalloonTipText = text;
-            this.m_ListLabels[(int)eOSD.CapsLock] = text;
+            m_OsdString = text;
+            notifyIconCapsLock.Icon = i_Toggle ? m_IndicatorIcons[(int)eIconIndex.CapsLockOn]
+                                    : m_IndicatorIcons[(int)eIconIndex.CapsLockOff];
+            notifyIconCapsLock.Text = text;
+            notifyIconCapsLock.BalloonTipText = text;
+            m_ListLabels[(int)eOSD.CapsLock] = text;
         }
 
         private void updateNumLock(bool i_Toggle)
         {
             string text = i_Toggle ? tbNumLockOn.Text : tbNumLockOff.Text;
-            this.m_OsdString = text;
-            this.notifyIconNumLock.Icon = i_Toggle ? this.m_IndicatorIcons[(int)eIconIndex.NumLockOn]
-                                    : this.m_IndicatorIcons[(int)eIconIndex.NumLockOff];
-            this.notifyIconNumLock.Text = text;
-            this.notifyIconNumLock.BalloonTipText = text;
-            this.m_ListLabels[(int)eOSD.NumLock] = text;
+            m_OsdString = text;
+            notifyIconNumLock.Icon = i_Toggle ? m_IndicatorIcons[(int)eIconIndex.NumLockOn]
+                                    : m_IndicatorIcons[(int)eIconIndex.NumLockOff];
+            notifyIconNumLock.Text = text;
+            notifyIconNumLock.BalloonTipText = text;
+            m_ListLabels[(int)eOSD.NumLock] = text;
         }
 
         private void updateScrollLock(bool i_Toggle)
         {
             string text = i_Toggle ? tbScrollLockOn.Text : tbScrollLockOff.Text;
-            this.m_OsdString = text;
-            this.notifyIconScrollLock.Icon = i_Toggle ? this.m_IndicatorIcons[(int)eIconIndex.ScrollLockOn]
-                                    : this.m_IndicatorIcons[(int)eIconIndex.ScrollLockOff];
-            this.notifyIconScrollLock.Text = text;
-            this.notifyIconScrollLock.BalloonTipText = text;
-            this.m_ListLabels[(int)eOSD.ScrollLock] = text;
+            m_OsdString = text;
+            notifyIconScrollLock.Icon = i_Toggle ? m_IndicatorIcons[(int)eIconIndex.ScrollLockOn]
+                                    : m_IndicatorIcons[(int)eIconIndex.ScrollLockOff];
+            notifyIconScrollLock.Text = text;
+            notifyIconScrollLock.BalloonTipText = text;
+            m_ListLabels[(int)eOSD.ScrollLock] = text;
         }
 
         private void updateInsert()
         {
-            this.m_OsdString = tbInsert.Text;
+            m_OsdString = tbInsert.Text;
         }
 
         private void ShowOSD()
         {
-            if (m_Style == eStyle.Normal && this.m_OsdString != string.Empty)
+            if (m_Style == eStyle.Normal && m_OsdString != string.Empty)
             {
-                this.m_OSD.Label.Text = this.m_OsdString;
+                m_OSD.Label.Text = m_OsdString;
                 Point p = new Point();
                 p.X = SystemInformation.VirtualScreen.X;
                 p.Y = SystemInformation.VirtualScreen.Y;
                 //this.m_OSD.Location = new Point(p.X, p.Y);
-                this.updateLocation();
-                this.m_OSD.Show();
+                updateLocation();
+                m_OSD.Show();
             }
             else
             {
-                this.updateStickyOSD();
+                updateStickyOSD();
             }
-            this.playSound();
+            playSound();
         }
 
         private enum eOSD : int
@@ -250,7 +250,7 @@ namespace KeyboardIndicator
         private void updateStickyOSD()
         {
             // style normal - hide and return
-            if (this.m_Style == eStyle.Normal)
+            if (m_Style == eStyle.Normal)
             {
                 foreach (SimpleOsdForm o in m_ListStickyOSD)
                     o.HideFast();
@@ -263,7 +263,7 @@ namespace KeyboardIndicator
                 for (int c = 0; c < 3; c++)
                 {
                     SimpleOsdForm o = new SimpleOsdForm();
-                    this.applySettingsToOSD(o);
+                    applySettingsToOSD(o);
                     m_ListStickyOSD.Add(o);
                 }
             }
@@ -297,10 +297,10 @@ namespace KeyboardIndicator
                 m_ListStickyOSD[i].ShowAlways();
             }
 
-            Point p = this.m_OSD.Location;
+            Point p = m_OSD.Location;
 
-            if (this.m_OsdLocation == eLocation.BottomRight ||
-                this.m_OsdLocation == eLocation.UpperRight)
+            if (m_OsdLocation == eLocation.BottomRight ||
+                m_OsdLocation == eLocation.UpperRight)
             {
                 p.X = Screen.PrimaryScreen.WorkingArea.Width - width - k_Margin;
             }
@@ -308,9 +308,9 @@ namespace KeyboardIndicator
             int horizontal_width = active * width + active * k_Margin;
             int hz_half_width = horizontal_width / 2;
 
-            if (this.m_Style == eStyle.StickyHorizontal &&
-                (this.m_OsdLocation == eLocation.BottomRight ||
-                 this.m_OsdLocation == eLocation.UpperRight))
+            if (m_Style == eStyle.StickyHorizontal &&
+                (m_OsdLocation == eLocation.BottomRight ||
+                 m_OsdLocation == eLocation.UpperRight))
             {
                 p.X = Screen.PrimaryScreen.WorkingArea.Width - horizontal_width;
             }
@@ -318,22 +318,22 @@ namespace KeyboardIndicator
             int vertical_height = active * height + active * k_Margin;
             int vt_half_height = vertical_height / 2;
 
-            if (this.m_Style == eStyle.StickyVertical &&
-                (this.m_OsdLocation == eLocation.BottomLeft ||
-                 this.m_OsdLocation == eLocation.BottomRight))
+            if (m_Style == eStyle.StickyVertical &&
+                (m_OsdLocation == eLocation.BottomLeft ||
+                 m_OsdLocation == eLocation.BottomRight))
             {
                 p.Y = Screen.PrimaryScreen.WorkingArea.Height - vertical_height;
             }
 
-            if (this.m_OsdLocation == eLocation.Center)
+            if (m_OsdLocation == eLocation.Center)
             {
-                if (this.m_Style == eStyle.StickyHorizontal)
+                if (m_Style == eStyle.StickyHorizontal)
                     p.X = p.X - hz_half_width;
-                else if (this.m_Style == eStyle.StickyVertical)
+                else if (m_Style == eStyle.StickyVertical)
                     p.Y = p.Y - vt_half_height;
             }
 
-            this.m_OSD.Location = p;
+            m_OSD.Location = p;
 
             foreach (eOSD o in Enum.GetValues(typeof(eOSD)))
             {
@@ -344,7 +344,7 @@ namespace KeyboardIndicator
 
                 m_ListStickyOSD[i].Location = p;
 
-                switch (this.m_Style)
+                switch (m_Style)
                 {
                     case eStyle.StickyHorizontal:
                         //p.X = p.X + m_ListStickyOSD[i].Label.Width + k_Margin;
@@ -370,38 +370,38 @@ namespace KeyboardIndicator
 
         private void playSound()
         {
-            if (this.m_EnableSound && this.m_SoundPlayer != null)
+            if (m_EnableSound && m_SoundPlayer != null)
             {
-                this.m_SoundPlayer.Play();
+                m_SoundPlayer.Play();
             }
         }
 
         private void updateLocation()
         {
-            switch (this.m_OsdLocation)
+            switch (m_OsdLocation)
             {
                 case eLocation.BottomLeft:
-                    this.setBottomLeft(this.m_OSD);
+                    setBottomLeft(m_OSD);
                     break;
 
                 case eLocation.BottomRight:
-                    this.setBottomRight(this.m_OSD);
+                    setBottomRight(m_OSD);
                     break;
 
                 case eLocation.UpperLeft:
-                    this.setUpperLeft(this.m_OSD);
+                    setUpperLeft(m_OSD);
                     break;
                 
                 case eLocation.UpperRight:
-                    this.setUpperRight(this.m_OSD);
+                    setUpperRight(m_OSD);
                     break;
 
                 case eLocation.Center:
-                    this.m_OSD.CenterToScreen();
+                    m_OSD.CenterToScreen();
                     break;
 
                 case eLocation.Manual:
-                    this.m_OSD.Location = Properties.Settings.Default.OsdPoint;
+                    m_OSD.Location = Properties.Settings.Default.OsdPoint;
                     break;
             }
         }
@@ -439,75 +439,75 @@ namespace KeyboardIndicator
 
         private void setUpperRight(SimpleOsdForm i_Osd)
         {
-            this.setBottomRight(i_Osd);
+            setBottomRight(i_Osd);
             i_Osd.Location = new Point(i_Osd.Location.X, k_Margin);
         }
 
         private void buttonForeColor_Click(object sender, EventArgs e)
         {
-            this.colorDialog.Color = this.m_ExampleOSD.Label.ForeColor;
+            colorDialog.Color = m_ExampleOSD.Label.ForeColor;
 
-            if (this.colorDialog.ShowDialog() == DialogResult.OK)
+            if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                this.m_ExampleOSD.Label.ForeColor = this.colorDialog.Color;
+                m_ExampleOSD.Label.ForeColor = colorDialog.Color;
             }
         }
 
         private void buttonBackColor_Click(object sender, EventArgs e)
         {
-            this.colorDialog.Color = this.m_ExampleOSD.Label.BackColor;
+            colorDialog.Color = m_ExampleOSD.Label.BackColor;
 
-            if (this.colorDialog.ShowDialog() == DialogResult.OK)
+            if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                this.m_ExampleOSD.Label.BackColor = this.colorDialog.Color;
+                m_ExampleOSD.Label.BackColor = colorDialog.Color;
             }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.hideMyself();
+            hideMyself();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            this.saveSettings();
-            this.updateModifiers();
-            this.applySettings();
-            this.updateStickyOSD();
-            this.hideMyself();
+            saveSettings();
+            updateModifiers();
+            applySettings();
+            updateStickyOSD();
+            hideMyself();
         }
 
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.showMyself();
+            showMyself();
         }
 
         private void showMyself()
         {
-            this.ShowInTaskbar = true;
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
-            this.loadExample();
-            this.Activate();
+            ShowInTaskbar = true;
+            Show();
+            WindowState = FormWindowState.Normal;
+            loadExample();
+            Activate();
         }
 
         private void loadExample()
         {
-            if (this.m_ExampleOSD == null)
+            if (m_ExampleOSD == null)
             {
                 const bool k_Clickthrough = true;
 
-                this.m_ExampleOSD = new SimpleOsdForm(!k_Clickthrough);
-                this.m_ExampleOSD.MouseUp += new MouseEventHandler(m_ExampleOSD_MouseUp);
-                this.m_ExampleOSD.MouseDown += new MouseEventHandler(m_ExampleOSD_MouseDown);
-                this.m_ExampleOSD.Move += new EventHandler(m_ExampleOSD_Move);
-                this.m_ExampleOSD.Label.Text = "Example";
-                this.updateExampleLocation();
+                m_ExampleOSD = new SimpleOsdForm(!k_Clickthrough);
+                m_ExampleOSD.MouseUp += new MouseEventHandler(m_ExampleOSD_MouseUp);
+                m_ExampleOSD.MouseDown += new MouseEventHandler(m_ExampleOSD_MouseDown);
+                m_ExampleOSD.Move += new EventHandler(m_ExampleOSD_Move);
+                m_ExampleOSD.Label.Text = "Example";
+                updateExampleLocation();
 
-                this.applySettingsToOSD(this.m_ExampleOSD);
+                applySettingsToOSD(m_ExampleOSD);
             }
 
-            this.m_ExampleOSD.ShowAlways(this);
+            m_ExampleOSD.ShowAlways(this);
         }
 
         private void applySettingsToOSD(SimpleOsdForm i_Osd)
@@ -535,7 +535,7 @@ namespace KeyboardIndicator
         {
             if (m_OsdMove)
             {
-                tbLocation.Text = this.m_ExampleOSD.Location.ToString();
+                tbLocation.Text = m_ExampleOSD.Location.ToString();
             }
         }
 
@@ -544,46 +544,46 @@ namespace KeyboardIndicator
             if (m_OsdMove && e.Button == MouseButtons.Left)
             {
                 m_OsdMove = false;
-                tbLocation.Text = new PointConverter().ConvertToString(this.m_ExampleOSD.Location);
+                tbLocation.Text = new PointConverter().ConvertToString(m_ExampleOSD.Location);
                 Properties.Settings.Default.OsdPoint = (Point)(new PointConverter().ConvertFromString(tbLocation.Text));
-                this.updateExampleLocation();
-                this.updateLocation();
+                updateExampleLocation();
+                updateLocation();
             }
         }
 
         private void updateExampleLocation()
         {
             const int k_PadTop = 10;
-            Point location = this.Location;
-            location.Y += this.Height + k_PadTop;
-            this.m_ExampleOSD.Location = location;
+            Point location = Location;
+            location.Y += Height + k_PadTop;
+            m_ExampleOSD.Location = location;
         }
 
         protected override void OnLocationChanged(EventArgs e)
         {
             base.OnLocationChanged(e);
 
-            if (this.m_ExampleOSD != null)
+            if (m_ExampleOSD != null)
             {
-                this.updateExampleLocation();
+                updateExampleLocation();
             }
         }
 
         private void hideMyself()
         {
-            this.WindowState = FormWindowState.Minimized;
-            this.Hide();
+            WindowState = FormWindowState.Minimized;
+            Hide();
         }
 
         private void checkBoxStartWithWindows_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.checkBoxStartWithWindows.Checked)
+            if (checkBoxStartWithWindows.Checked)
             {
-                this.setOnStartup();
+                setOnStartup();
             }
             else
             {
-                this.removeFromStartup();
+                removeFromStartup();
             }
         }
 
@@ -635,30 +635,30 @@ namespace KeyboardIndicator
         private void loadSettings()
         {
             // Global config
-            this.cbUseGlobalConfig.Checked = Properties.Settings.Default.UseGlobalConfig;
+            cbUseGlobalConfig.Checked = Properties.Settings.Default.UseGlobalConfig;
 
             // Registry
-            this.checkBoxStartWithWindows.Checked = this.isOnStartup();
+            checkBoxStartWithWindows.Checked = isOnStartup();
             
             // Sound
-            this.m_EnableSound = Properties.Settings.Default.EnableSound;
-            this.checkBoxEnableSound.Checked = this.m_EnableSound;
+            m_EnableSound = Properties.Settings.Default.EnableSound;
+            checkBoxEnableSound.Checked = m_EnableSound;
             
-            if (this.m_EnableSound)
+            if (m_EnableSound)
             {
-                this.loadSound();
+                loadSound();
             }
 
             // Location
             try
             {
-                this.m_OsdLocation = (eLocation)Enum.Parse(typeof(eLocation), Properties.Settings.Default.OsdLocation);
+                m_OsdLocation = (eLocation)Enum.Parse(typeof(eLocation), Properties.Settings.Default.OsdLocation);
             }
             catch
             {
-                this.m_OsdLocation = eLocation.BottomRight;
+                m_OsdLocation = eLocation.BottomRight;
             }
-            this.cbLocation.SelectedIndex = (int)this.m_OsdLocation;
+            cbLocation.SelectedIndex = (int)m_OsdLocation;
             tbLocation.Text = new PointConverter().ConvertToString(Properties.Settings.Default.OsdPoint);
 
             // Text
@@ -676,42 +676,42 @@ namespace KeyboardIndicator
             // Animation
             try
             {
-                this.m_HideAnimation = (AnimateWindowFlags)Enum.Parse(typeof(AnimateWindowFlags), Properties.Settings.Default.HideAnimation);
+                m_HideAnimation = (AnimateWindowFlags)Enum.Parse(typeof(AnimateWindowFlags), Properties.Settings.Default.HideAnimation);
             }
             catch
             {
-                this.m_HideAnimation = AnimateWindowFlags.AW_CENTER;
+                m_HideAnimation = AnimateWindowFlags.AW_CENTER;
             }
-            this.selectAnimationCb(this.m_HideAnimation);
-            this.numAnimationSpeed.Value = Properties.Settings.Default.AnimationSpeed;
+            selectAnimationCb(m_HideAnimation);
+            numAnimationSpeed.Value = Properties.Settings.Default.AnimationSpeed;
             
             // Interval
-            this.numInterval.Value = Properties.Settings.Default.Interval;
+            numInterval.Value = Properties.Settings.Default.Interval;
 
             // Style
             try
             {
-                this.m_Style = (eStyle)Enum.Parse(typeof(eStyle), Properties.Settings.Default.OsdStyle);
+                m_Style = (eStyle)Enum.Parse(typeof(eStyle), Properties.Settings.Default.OsdStyle);
             }
             catch
             {
-                this.m_Style = eStyle.Normal;
+                m_Style = eStyle.Normal;
             }
-            this.selectStyleCb(this.m_Style);
+            selectStyleCb(m_Style);
 
-            this.updateModifiers();
-            this.applySettings();
-            this.updateStickyOSD();
+            updateModifiers();
+            applySettings();
+            updateStickyOSD();
         }
 
         private void loadSound()
         {
-            if (this.m_SoundPlayer == null)
+            if (m_SoundPlayer == null)
             {
-                this.m_SoundPlayer = new SoundPlayer(Properties.Resources.WavClick);
+                m_SoundPlayer = new SoundPlayer(Properties.Resources.WavClick);
                 // This make sure first Play() execution wont freeze a little.
-                this.m_SoundPlayer.LoadAsync();
-                this.m_SoundPlayer.Stop();
+                m_SoundPlayer.LoadAsync();
+                m_SoundPlayer.Stop();
             }
         }
 
@@ -720,15 +720,15 @@ namespace KeyboardIndicator
         /// </summary>
         private void applySettings()
         {
-            this.m_OSD.Animation = this.m_HideAnimation;
-            this.m_OSD.IntervalAnimation = (int)numAnimationSpeed.Value;
-            this.m_OSD.IntervalHide = (int)numInterval.Value;
-            this.applySettingsToOSD(this.m_OSD);
+            m_OSD.Animation = m_HideAnimation;
+            m_OSD.IntervalAnimation = (int)numAnimationSpeed.Value;
+            m_OSD.IntervalHide = (int)numInterval.Value;
+            applySettingsToOSD(m_OSD);
 
-            this.updateLocation();
+            updateLocation();
 
-            foreach (SimpleOsdForm o in this.m_ListStickyOSD)
-                this.applySettingsToOSD(o);
+            foreach (SimpleOsdForm o in m_ListStickyOSD)
+                applySettingsToOSD(o);
         }
 
         private void saveSettings()
@@ -740,19 +740,19 @@ namespace KeyboardIndicator
             Properties.Settings.Default.ScrollLockOn = tbScrollLockOn.Text.Trim();
             Properties.Settings.Default.ScrollLockOff = tbScrollLockOff.Text.Trim();
             Properties.Settings.Default.InsertPress = tbInsert.Text.Trim();
-            Properties.Settings.Default.OsdLocation = this.m_OsdLocation.ToString();
+            Properties.Settings.Default.OsdLocation = m_OsdLocation.ToString();
             Properties.Settings.Default.OsdPoint = (Point)(new PointConverter().ConvertFromString(tbLocation.Text));
-            Properties.Settings.Default.OsdStyle = this.m_Style.ToString();
-            Properties.Settings.Default.ForeColor = this.m_ExampleOSD.Label.ForeColor;
-            Properties.Settings.Default.BackColor = this.m_ExampleOSD.Label.BackColor;
-            Properties.Settings.Default.Font = this.m_ExampleOSD.Label.Font;
-            Properties.Settings.Default.Opacity = this.m_ExampleOSD.Opacity;
-            Properties.Settings.Default.HideAnimation = this.m_HideAnimation.ToString();
+            Properties.Settings.Default.OsdStyle = m_Style.ToString();
+            Properties.Settings.Default.ForeColor = m_ExampleOSD.Label.ForeColor;
+            Properties.Settings.Default.BackColor = m_ExampleOSD.Label.BackColor;
+            Properties.Settings.Default.Font = m_ExampleOSD.Label.Font;
+            Properties.Settings.Default.Opacity = m_ExampleOSD.Opacity;
+            Properties.Settings.Default.HideAnimation = m_HideAnimation.ToString();
             Properties.Settings.Default.AnimationSpeed = (int)numAnimationSpeed.Value;
             Properties.Settings.Default.Interval = (int)numInterval.Value;
-            Properties.Settings.Default.EnableSound = this.m_EnableSound;
-            Properties.Settings.Default.UseGlobalConfig = this.cbUseGlobalConfig.Checked;
-            Properties.Settings.Default.OsdBorder = this.cbOsdBorder.Checked;
+            Properties.Settings.Default.EnableSound = m_EnableSound;
+            Properties.Settings.Default.UseGlobalConfig = cbUseGlobalConfig.Checked;
+            Properties.Settings.Default.OsdBorder = cbOsdBorder.Checked;
 
             if (cbUseGlobalConfig.Checked)
             {
@@ -771,13 +771,13 @@ namespace KeyboardIndicator
 
         private void buttonReset_Click(object sender, EventArgs e)
         {
-            this.resetSettings();
+            resetSettings();
         }
 
         private void resetSettings()
         {
             Properties.Settings.Default.Reset();
-            this.loadSettings();
+            loadSettings();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -785,7 +785,7 @@ namespace KeyboardIndicator
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
-                this.hideMyself();
+                hideMyself();
             }
 
             base.OnFormClosing(e);
@@ -793,7 +793,7 @@ namespace KeyboardIndicator
 
         private void menuItemSettings_Click(object sender, EventArgs e)
         {
-            this.showMyself();
+            showMyself();
         }
 
         private void menuItemExit_Click(object sender, EventArgs e)
@@ -803,63 +803,63 @@ namespace KeyboardIndicator
 
         private void checkBoxEnableSound_CheckedChanged(object sender, EventArgs e)
         {
-            this.m_EnableSound = this.checkBoxEnableSound.Checked;
+            m_EnableSound = checkBoxEnableSound.Checked;
 
-            if (this.m_EnableSound)
+            if (m_EnableSound)
             {
-                this.loadSound();
+                loadSound();
             }
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(this, r_AboutString, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, r_AboutString, Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void buttonFont_Click(object sender, EventArgs e)
         {
-            this.fontDialog.Font = this.m_ExampleOSD.Label.Font;
+            fontDialog.Font = m_ExampleOSD.Label.Font;
 
-            if (this.fontDialog.ShowDialog() == DialogResult.OK)
+            if (fontDialog.ShowDialog() == DialogResult.OK)
             {
-                this.m_ExampleOSD.Label.Font = this.fontDialog.Font;
+                m_ExampleOSD.Label.Font = fontDialog.Font;
             }
         }
 
         private void cbLocation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.m_OsdLocation = (eLocation)cbLocation.SelectedIndex;
+            m_OsdLocation = (eLocation)cbLocation.SelectedIndex;
             tbLocation.Enabled = m_OsdLocation == eLocation.Manual;
             updateLocation();
         }
 
         private void numOpacity_ValueChanged(object sender, EventArgs e)
         {
-            if (this.m_ExampleOSD != null)
+            if (m_ExampleOSD != null)
             {
-                this.m_ExampleOSD.Opacity = (double)numOpacity.Value;
+                m_ExampleOSD.Opacity = (double)numOpacity.Value;
             }
         }
 
         private void cbOsdBorder_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.m_ExampleOSD != null)
+            if (m_ExampleOSD != null)
             {
-                this.m_ExampleOSD.Border = this.cbOsdBorder.Checked;
+                m_ExampleOSD.Border = cbOsdBorder.Checked;
             }
         }
 
         private void cbAnimation_SelectedIndexChanged(object sender, EventArgs e)
         {
             KeyValuePair<string, AnimateWindowFlags> item = (KeyValuePair<string, AnimateWindowFlags>)cbAnimation.SelectedItem;
-            this.m_HideAnimation = item.Value;
+            m_HideAnimation = item.Value;
         }
 
         private void cbStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
             KeyValuePair<string, eStyle> item = (KeyValuePair<string, eStyle>)cbStyle.SelectedItem;
-            this.m_Style = item.Value;
-            this.updateStickyOSD();
+            m_Style = item.Value;
+            updateStickyOSD();
         }
     }
 }

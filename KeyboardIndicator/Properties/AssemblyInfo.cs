@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Resources;
 
@@ -9,7 +8,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Keyboard Indicator")]
 [assembly: AssemblyDescription("http://roidayan.com")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Roi Dayan")]
+[assembly: AssemblyCompany("Roi Dayan et Freddy Juhel")]
 [assembly: AssemblyProduct("Keyboard Indicator")]
 [assembly: AssemblyCopyright("Copyright © 2009-2017 Roi Dayan and Copyright © 2022 Freddy Juhel")]
 [assembly: AssemblyTrademark("")]
@@ -33,6 +32,6 @@ using System.Resources;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.6.2.0")]
-[assembly: AssemblyFileVersion("1.6.2.0")]
+[assembly: AssemblyVersion("1.7.0.0")]
+[assembly: AssemblyFileVersion("1.7.0.0")]
 [assembly: NeutralResourcesLanguageAttribute("")]
